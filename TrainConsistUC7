@@ -1,0 +1,40 @@
+import java.util.*;
+
+// Step 1: Define Bogie class
+class Bogie {
+    String name;
+    int capacity;
+
+    // Constructor
+    public Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
+    }
+
+    // Display method
+    @Override
+    public String toString() {
+        return "Bogie: " + name + " | Capacity: " + capacity;
+    }
+}
+
+// Public class name matches UC7 requirement
+public class TrainConsistUC7 {
+    public static void main(String[] args) {
+        // Step 2: Create a list of passenger bogies
+        List<Bogie> passengerBogies = new ArrayList<>();
+
+        passengerBogies.add(new Bogie("Sleeper", 72));
+        passengerBogies.add(new Bogie("AC Chair", 60));
+        passengerBogies.add(new Bogie("First Class", 24));
+
+        // Step 3: Sort the list by capacity using Comparator
+        passengerBogies.sort(Comparator.comparingInt(b -> b.capacity)); // ascending order
+
+        // Step 4: Display sorted bogies
+        System.out.println("Passenger Bogies sorted by capacity:");
+        for (Bogie b : passengerBogies) {
+            System.out.println(b);
+        }
+    }
+}
