@@ -1,0 +1,64 @@
+import java.util.Arrays;
+
+public class UseCase20ExceptionDuringSearch {
+
+    // 🔥 Binary Search with Validation
+    public static boolean searchBogie(String[] bogieIds, String key) {
+
+        // 🔥 Fail-Fast Check
+        if (bogieIds == null || bogieIds.length == 0) {
+            throw new IllegalStateException("Cannot perform search: No bogies available in the train");
+        }
+
+        // Ensure sorted (reuse UC19 logic)
+        Arrays.sort(bogieIds);
+
+        int low = 0;
+        int high = bogieIds.length - 1;
+
+        while (low <= high) {
+
+            int mid = low + (high - low) / 2;
+
+            int comparison = bogieIds[mid].compareTo(key);
+
+            if (comparison == 0) {
+                return true;
+            } else if (comparison < 0) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+
+        // 🔹 Case 1: Empty Data (Exception)
+        String[] emptyBogies = {};
+
+        try {
+            searchBogie(emptyBogies, "BG101");
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // 🔹 Case 2: Valid Search
+        String[] bogies = {"BG101", "BG205", "BG309"};
+
+        try {
+            boolean found = searchBogie(bogies, "BG205");
+
+            if (found) {
+                System.out.println("Bogie FOUND");
+            } else {
+                System.out.println("Bogie NOT FOUND");
+            }
+
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
