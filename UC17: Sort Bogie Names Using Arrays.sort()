@@ -1,0 +1,25 @@
+import java.util.Arrays;
+
+public class UseCase17SortBogieNames {
+
+    public static void main(String[] args) {
+
+        // Input array of bogie type names
+        String[] bogieNames = {
+                "Sleeper",
+                "AC Chair",
+                "First Class",
+                "General",
+                "Luxury"
+        };
+
+        System.out.println("=== Original Bogie Names ===");
+        System.out.println(Arrays.toString(bogieNames));
+
+        // Built-in Sorting
+        Arrays.sort(bogieNames);
+
+        System.out.println("\n=== Sorted Bogie Names (Alphabetical) ===");
+        System.out.println(Arrays.toString(bogieNames));
+    }
+}
