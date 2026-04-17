@@ -1,0 +1,72 @@
+import java.util.*;
+import java.util.stream.Collectors;
+
+// Base Bogie Class
+abstract class Bogie {
+    String bogieId;
+
+    public Bogie(String bogieId) {
+        this.bogieId = bogieId;
+    }
+
+    public abstract void display();
+}
+
+// Passenger Bogie
+class PassengerBogie extends Bogie {
+    String type;
+    int capacity;
+
+    public PassengerBogie(String bogieId, String type, int capacity) {
+        super(bogieId);
+        this.type = type;
+        this.capacity = capacity;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Bogie ID: " + bogieId +
+                ", Type: " + type +
+                ", Capacity: " + capacity);
+    }
+}
+
+// Main Class
+public class UseCase8FilterPassengerBogies {
+    public static void main(String[] args) {
+
+        // Reusing list (like UC7)
+        List<PassengerBogie> bogies = new ArrayList<>();
+
+        bogies.add(new PassengerBogie("B1", "Sleeper", 72));
+        bogies.add(new PassengerBogie("B2", "AC Chair", 60));
+        bogies.add(new PassengerBogie("B3", "First Class", 40));
+        bogies.add(new PassengerBogie("B4", "Sleeper", 80));
+        bogies.add(new PassengerBogie("B5", "AC Chair", 70));
+
+        System.out.println("=== Original Bogie List ===");
+        bogies.forEach(b -> b.display());
+
+        // 🔥 Stream Filtering (Core Logic)
+        List<PassengerBogie> filteredBogies =
+                bogies.stream()
+                        .filter(b -> b.getCapacity() > 70)   // condition
+                        .collect(Collectors.toList());
+
+        System.out.println("\n=== Filtered Bogies (Capacity > 70) ===");
+
+        if (filteredBogies.isEmpty()) {
+            System.out.println("No bogies match the criteria.");
+        } else {
+            filteredBogies.forEach(b -> b.display());
+        }
+
+        // Verify original list unchanged
+        System.out.println("\nOriginal list size: " + bogies.size());
+        System.out.println("Filtered list size: " + filteredBogies.size());
+    }
+}
