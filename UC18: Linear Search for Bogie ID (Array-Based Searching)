@@ -1,0 +1,90 @@
+Train Consist Management App 
+The Train Consist Management App is a console-based Java application that simulates how a railway system manages a train’s consist, which is a collection of bogies attached to an engine.
+The application supports:	
+Passenger bogies (Sleeper, AC Chair, First Class) with seat capacity tracking
+Goods bogies (Rectangular, Cylindrical) with cargo type and safety constraints
+Tracking composition, capacity, cargo types, and safety compliance
+Each use case introduces one or more Java concepts through a realistic railway Scenario.
+
+UC18: Linear Search for Bogie ID (Array-Based Searching)
+
+Drawback of UC17 Approach
+In UC17, bogie names were sorted for reporting, but the system still lacks a way to locate a specific bogie by ID in the consist.
+In real railway operations:
+• Operators search bogies for inspection.
+• Maintenance teams locate damaged coaches.
+• Systems must retrieve a bogie quickly.
+If no search logic exists:
+❌ The system can only display all data.
+❌ It cannot pinpoint a specific bogie.
+❌ Manual scanning becomes necessary.
+Before optimizing, the system must first support basic searching, even when data is unsorted.
+That is why UC18 introduces Linear Search.
+Goal
+Search and identify a specific bogie ID from an unsorted list using Linear Search.
+
+
+Please refer to the code snapshot below to write your code
+Please refer to the hint below to write your code
+
+Actor: User
+Flow
+User provides a list of bogie IDs.
+User provides a search key.
+ System traverses the array sequentially.
+ Each element is compared with the search key.
+ If match found, search stops.
+ Result is displayed.
+ Program continues.
+Key Concepts Used in UC18
+Linear Search – A simple searching technique that checks each element one by one until a match is found.
+Sequential Traversal – Visits elements in order from start to end.
+Equality Comparison – Uses equals() to compare string IDs safely.
+Early Termination – Stops searching immediately once a match is found.
+Unsorted Data Handling – Works correctly even when data is not ordered.
+Time Complexity Awareness – Demonstrates O(n) performance characteristics.
+Key Requirements
+Create an array of bogie IDs.
+Accept a bogie ID to search.
+Traverse the array using a loop.
+Compare each ID using equals().
+Stop when a match is found.
+Print whether the bogie exists.
+Key Benefits
+Works on any data ordering.
+Simple and reliable search logic.
+Introduces searching fundamentals.
+Prepares for optimized search in UC19.
+Builds understanding of traversal logic.
+Please refer to the output after compiling and running the Program
+
+Test Case Examples:
+Basic Search Behavior
+The system should correctly identify whether a given bogie ID exists in the list using Linear Search.
+Search Match Found
+If the search key matches an element in the array, the system should stop searching and return a successful result.
+Search Match Not Found
+If the search key does not exist in the array, the system should traverse the entire list and return a not-found result.
+First Element Match
+If the search key matches the first element of the array, the search should terminate immediately.
+Last Element Match
+If the search key matches the last element of the array, the search should traverse the list until the final element and then return success.
+Test Case Examples
+testSearch_BogieFound()
+Verifies that the system successfully identifies an existing bogie ID.
+Tests: Searching "BG309" in {"BG101","BG205","BG309","BG412","BG550"} returns true.
+testSearch_BogieNotFound()
+Verifies that the system returns a negative result when the bogie ID does not exist.
+Tests: Searching "BG999" in {"BG101","BG205","BG309","BG412","BG550"} returns false.
+testSearch_FirstElementMatch()
+Verifies that the search correctly detects a match at the first position.
+Tests: Searching "BG101" in {"BG101","BG205","BG309","BG412","BG550"} returns true.
+testSearch_LastElementMatch()
+Verifies that the search correctly detects a match at the last position.
+Tests: Searching "BG550" in {"BG101","BG205","BG309","BG412","BG550"} returns true.
+testSearch_SingleElementArray()
+Verifies that the search works correctly when only one bogie ID exists.
+Tests: Searching "BG101" in {"BG101"} returns true.
+Code Snippet of QuantityMeasurementAppTest
+
+
