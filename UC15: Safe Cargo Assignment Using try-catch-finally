@@ -1,0 +1,85 @@
+import java.util.*;
+
+// 🔥 Custom Runtime Exception (Unchecked)
+class CargoSafetyException extends RuntimeException {
+    public CargoSafetyException(String message) {
+        super(message);
+    }
+}
+
+// Base Bogie
+abstract class Bogie {
+    String bogieId;
+
+    public Bogie(String bogieId) {
+        this.bogieId = bogieId;
+    }
+}
+
+// Goods Bogie
+class GoodsBogie extends Bogie {
+    String shape;   // Rectangular / Cylindrical
+    String cargo;   // Assigned cargo
+
+    public GoodsBogie(String bogieId, String shape) {
+        super(bogieId);
+        this.shape = shape;
+    }
+
+    // 🔥 Cargo Assignment with Safety Check
+    public void assignCargo(String cargoType) {
+        try {
+            // Unsafe condition
+            if (shape.equalsIgnoreCase("Rectangular") &&
+                cargoType.equalsIgnoreCase("Petroleum")) {
+
+                throw new CargoSafetyException(
+                        "Unsafe: Petroleum cannot be assigned to Rectangular bogie");
+            }
+
+            // Safe assignment
+            this.cargo = cargoType;
+            System.out.println("Cargo '" + cargoType +
+                    "' assigned to Bogie " + bogieId);
+
+        } catch (CargoSafetyException e) {
+            System.out.println("Error: " + e.getMessage());
+
+        } finally {
+            System.out.println("Assignment attempt completed for Bogie " + bogieId);
+        }
+    }
+
+    public void display() {
+        System.out.println("Bogie ID: " + bogieId +
+                ", Shape: " + shape +
+                ", Cargo: " + (cargo != null ? cargo : "None"));
+    }
+}
+
+// Main Class
+public class UseCase15SafeCargoAssignment {
+
+    public static void main(String[] args) {
+
+        List<GoodsBogie> bogies = new ArrayList<>();
+
+        bogies.add(new GoodsBogie("G1", "Rectangular"));
+        bogies.add(new GoodsBogie("G2", "Cylindrical"));
+
+        // 🔹 Safe Assignment
+        bogies.get(1).assignCargo("Petroleum"); // allowed
+
+        // 🔹 Unsafe Assignment
+        bogies.get(0).assignCargo("Petroleum"); // exception
+
+        // 🔹 Another Safe Assignment (program continues)
+        bogies.get(0).assignCargo("Grain");
+
+        // Display final state
+        System.out.println("\n=== Final Bogie State ===");
+        for (GoodsBogie b : bogies) {
+            b.display();
+        }
+    }
+}
