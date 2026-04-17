@@ -1,0 +1,67 @@
+import java.util.*;
+
+// Base Bogie Class
+abstract class Bogie {
+    String bogieId;
+
+    public Bogie(String bogieId) {
+        this.bogieId = bogieId;
+    }
+
+    public abstract int getCapacity();
+    public abstract void display();
+}
+
+// Passenger Bogie
+class PassengerBogie extends Bogie {
+    String type;
+    int capacity;
+
+    public PassengerBogie(String bogieId, String type, int capacity) {
+        super(bogieId);
+        this.type = type;
+        this.capacity = capacity;
+    }
+
+    @Override
+    public int getCapacity() {
+        return capacity;
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Bogie ID: " + bogieId +
+                ", Type: " + type +
+                ", Capacity: " + capacity);
+    }
+}
+
+// Main Class
+public class UseCase10TotalSeats {
+    public static void main(String[] args) {
+
+        // Reuse list (same as UC7, UC8, UC9)
+        List<Bogie> bogies = new ArrayList<>();
+
+        bogies.add(new PassengerBogie("B1", "Sleeper", 72));
+        bogies.add(new PassengerBogie("B2", "AC Chair", 60));
+        bogies.add(new PassengerBogie("B3", "First Class", 40));
+        bogies.add(new PassengerBogie("B4", "Sleeper", 80));
+        bogies.add(new PassengerBogie("B5", "AC Chair", 70));
+
+        System.out.println("=== Bogie List ===");
+        bogies.forEach(b -> b.display());
+
+        //Core Logic: map + reduce
+        int totalSeats =
+                bogies.stream()
+                      .map(b -> b.getCapacity())   // extract capacity
+                      .reduce(0, Integer::sum);    // aggregate
+
+        System.out.println("\n=== Total Seating Capacity ===");
+        System.out.println("Total Seats in Train: " + totalSeats);
+
+        // Verify original list unchanged
+        System.out.println("\nOriginal list size: " + bogies.size());
+    }
+}
